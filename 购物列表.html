@@ -35,68 +35,90 @@
   <body>
     <!-- 创建vue运行框架 -->
     <div id="app">
-        <h2 style="text-align: center">购物列表</h2>
-        <div>
-            预算金额：<input type="text" @keyup.enter="handleEnter" >
-        </div>
-        <table>
-            <thead>
-                <th>索引</th>
-                <th>型号</th>
-                <th>价格</th>
-                <th>操作</th>
-            </thead>
+      <h2 style="text-align: center">购物列表</h2>
+      <!-- 添加商品 -->
+      <div>
+        <div>型号：<input type="text" v-model="newsGoods.type" /></div>
+        <div>价格：<input type="text" v-model="newsGoods.price" /></div>
+        <button @click="handleAdd">添加</button>
+      </div>
 
-            <tbody>
-                <!-- 通过循环遍历的方法渲染 -->
-                <tr v-for="(item,index) in goods" v-if="item.price <= money">
-                    <td>{{index + 1}}</td>
-                    <td>{{item.type}}</td>
-                    <td>{{item.price}}</td>
-                    <td>删除</td>
-                </tr>
-            </tbody>
+      <div>预算金额：<input type="text" @keyup.enter="handleEnter" /></div>
+      <table>
+        <thead>
+          <th>索引</th>
+          <th>型号</th>
+          <th>价格</th>
+          <th>操作</th>
+        </thead>
 
-        </table>
-
+        <tbody>
+          <!-- 通过循环遍历的方法渲染 -->
+          <tr v-for="(item,index) in goods" v-if="item.price <= money">
+            <td>{{ index + 1 }}</td>
+            <td>{{ item.type }}</td>
+            <td>{{ item.price }}</td>
+            <td>删除</td>
+          </tr>
+        </tbody>
+      </table>
     </div>
-
-
 
     <!-- 引入vue文件 -->
     <script src="./vue.min.js"></script>
     <script>
-        // 创建vue实例
-        var app = new Vue({
-            // 绑定容器
-            el:"#app",
-            data:{
-                goods:[
-                    {type:"苹果iPhone 11",price:5499},
-                    {type:"华为Mate 20 Pro",price:3199},
-                    {type:"小米9",price:2549},
-                    {type:"Redmi K20",price:1999},
-                ],
-                // 添加判断条件，因为一开始是以这个值作为判断显示相对的产品，所以要设高一点
-                money:200000,
+      // 创建vue实例
+      var app = new Vue({
+        // 绑定容器
+        el: "#app",
+        data: {
+          goods: [
+            { type: "苹果iPhone 11", price: 5499 },
+            { type: "华为Mate 20 Pro", price: 3199 },
+            { type: "小米9", price: 2549 },
+            { type: "Redmi K20", price: 1999 }
+          ],
+          // 添加判断条件，因为一开始是以这个值作为判断显示相对的产品，所以要设高一点
+          money: 200000,
 
-            },
+          // 初始化添加商品输入框的值
+          newsGoods: {
+            type: "",
+            price: ""
+          }
+        },
 
-            methods:{
-                // 当键盘弹起的时候触发事件，执行判断筛选功能
-                handleEnter(event){
-                    // 获取到当前输入框的数值赋值给变量value,记得用+号转换成数值
-                    var value = +event.target.value;
-                    console.log(value);
-                    
-                    // 将得到的value赋值到数据中的money，同步数据
-                    this.money = value
-                }
+        methods: {
+          // 当键盘弹起的时候触发事件，执行判断筛选功能
+          handleEnter(event) {
+            // 获取到当前输入框的数值赋值给变量value,记得用+号转换成数值
+            var value = +event.target.value;
+            console.log(value);
+
+            // 将得到的value赋值到数据中的money，同步数据
+            this.money = value;
+          },
+
+          // 当点击添加按钮的时候，执行添加商品的事件
+          handleAdd() {
+            // 先判断用户输入的值是否为空
+            if (this.newsGoods.type == "" || this.newsGoods.price == "") {
+              // 如果为空，则提示
+              alert("型号和价格都不能为空");
+              return;
             }
-        })
-    
+
+            // 添加的应该是一个复杂类型的对象，是值传递而不是地址传递，所以要新建一个对象存储
+            this.goods.push({
+              type: this.newsGoods.type,
+              price: this.newsGoods.price
+            });
+
+            this.newsGoods.type = "";
+            this.newsGoods.price = "";
+          }
+        }
+      });
     </script>
-
-
   </body>
 </html>
