@@ -33,8 +33,53 @@
     </style>
   </head>
   <body>
-    <div id="app"></div>
+    <!-- 创建vue运行框架 -->
+    <div id="app">
+        <h2>购物列表</h2>
+        <table>
+            <thead>
+                <th>索引</th>
+                <th>型号</th>
+                <th>价格</th>
+                <th>操作</th>
+            </thead>
 
+            <tbody>
+                <!-- 通过循环遍历的方法渲染 -->
+                <tr v-for="(item,index) in goods" style="text-align: center">
+                    <td>{{index + 1}}</td>
+                    <td>{{item.type}}</td>
+                    <td>{{item.price}}</td>
+                    <td>删除</td>
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+
+    <!-- 引入vue文件 -->
+    <script src="./vue.min.js"></script>
+    <script>
+        // 创建vue实例
+        var app = new Vue({
+            // 绑定容器
+            el:"#app",
+            data:{
+                goods:[
+                    {type:"苹果iPhone 11",price:5499.00},
+                    {type:"华为Mate 20 Pro",price:3199.00},
+                    {type:"小米9",price:2549.00},
+                    {type:"Redmi K20",price:1999.00},
+                ],
+
+
+            }
+        })
+    
+    </script>
 
 
   </body>
