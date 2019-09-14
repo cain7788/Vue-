@@ -36,6 +36,9 @@
     <!-- 创建vue运行框架 -->
     <div id="app">
         <h2>购物列表</h2>
+        <div>
+            预算金额：<input type="text" v-model="money" >
+        </div>
         <table>
             <thead>
                 <th>索引</th>
@@ -46,7 +49,7 @@
 
             <tbody>
                 <!-- 通过循环遍历的方法渲染 -->
-                <tr v-for="(item,index) in goods" style="text-align: center">
+                <tr v-for="(item,index) in goods" style="text-align: center" v-if="item.price <= money">
                     <td>{{index + 1}}</td>
                     <td>{{item.type}}</td>
                     <td>{{item.price}}</td>
@@ -74,7 +77,8 @@
                     {type:"小米9",price:2549.00},
                     {type:"Redmi K20",price:1999.00},
                 ],
-
+                // 添加判断条件，因为一开始是以这个值作为判断显示相对的产品，所以要设高一点
+                money:2000000,
 
             }
         })
