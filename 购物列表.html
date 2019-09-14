@@ -38,7 +38,7 @@
       <h2 style="text-align: center">购物列表</h2>
       <!-- 添加商品 -->
       <div>
-        <div>型号：<input type="text" v-model="newsGoods.type" /></div>
+        <div>型号：<input type="text" v-model="newsGoods.type" ref="typeInput"/></div>
         <div>价格：<input type="text" v-model="newsGoods.price" /></div>
         <button @click="handleAdd">添加</button>
       </div>
@@ -58,7 +58,7 @@
             <td>{{ index + 1 }}</td>
             <td>{{ item.type }}</td>
             <td>{{ item.price }}</td>
-            <td>删除</td>
+            <td><button @click="handleDel(index)">删除</button></td>
           </tr>
         </tbody>
       </table>
@@ -116,7 +116,20 @@
 
             this.newsGoods.type = "";
             this.newsGoods.price = "";
-          }
+          },
+
+        //   添加点击删除商品列表事件,通过index找到对应的商品
+          handleDel(index){
+            this.goods.splice(index,1)
+          },
+        },
+
+        // 当页面加载完成之后，设置默认焦点在输入框内
+        mounted(){
+            // 获取到这个input
+            let input = this.$refs.typeInput;
+            // 添加焦点
+            input.focus()
         }
       });
     </script>
