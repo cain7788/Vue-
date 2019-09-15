@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+      .pay{
+        display: inline-block;
+        width: 70px;
+        height: 25px;
+        line-height: 25px;
+        text-align: center;
+        background: rgb(255, 113, 31);
+        /* padding:5px; */
+      }
+    
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <button @click="handleUp">上一个商品</button>
+
+        <button @click="handleDown">下一个商品</button>
+      </div>
+      <p>{{ goods[index].type }}</p>
+      <p>
+        单价 <span>{{ goods[index].price }}</span
+        >元
+      </p>
+      <button @click="handleReduce">-</button>
+      <span v-model="goods[index].count">{{ goods[index].count }}</span>
+      <button @click="handleAdd">+</button>
+      <p>合计：{{ result }}</p>
+
+      <!-- 添加加入购物车按钮 -->
+      <button @click="addProduce">加入购物车</button>
+      <div>
+        <div v-for="(item,index) in arr" style="display: inline-block; margin:10px 8px">
+          <p>型号：{{ arr[index].type }}</p>
+          <p>单价：{{ arr[index].price }}</p>
+          <p style="color: red " ref="prices"> 总价：{{ arr[index].allPrice }}</p>
+        </div>
+        <div >支付总价：{{prices}}</div>  <button class="pay">确认支付</button>
+      </div>
+    </div>
+
+    <script src="./vue.min.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          goods: [
+            { type: "苹果iPhone 11", price: 5499, count: 1,allPrice:0 },
+            { type: "华为Mate 20 Pro", price: 3199, count: 1,allPrice:0 },
+            { type: "小米9", price: 2549, count: 1,allPrice:0 },
+            { type: "Redmi K20", price: 1999, count: 1,allPrice:0 }
+          ],
+
+          index: 0,
+
+          arr:[],
+
+          priceSum:0
+        },
+
+        computed: {
+          result() {
+            var index = this.index;
+            this.goods[index].allPrice = +this.goods[index].price * this.goods[index].count;
+            // return +this.goods[index].price * this.goods[index].count;
+            return this.goods[index].allPrice
+          },
+
+          prices(){
+            console.log(123);
+            var prices = 0
+            // var prices = this.priceSum
+            this.arr.forEach((item,index )=> {
+              // prices+= +this.arr[index].allPrice
+              prices+= +this.arr[index].allPrice
+            });
+            // this.priceSum = prices
+            return prices
+          }
+        },
+
+        methods: {
+          // 增加一件商品
+          handleAdd() {
+            var index = this.index;
+            var countAdd = this.goods[index].count;
+            countAdd++;
+            this.goods[index].count = countAdd;
+          },
+
+          // 减少一件商品
+          handleReduce() {
+            var index = this.index;
+
+            var countReduce = this.goods[index].count;
+            if (countReduce < 1) {
+              alert("不能再减啦！");
+              return;
+            }
+            countReduce--;
+            this.goods[index].count = countReduce;
+          },
+
+          // 更换到上一个商品
+          handleUp() {
+            var index = this.index;
+            var length = +this.goods.length;
+            if (index + 1 == length) {
+              index = 0;
+              this.index = index;
+              return;
+            }
+            index++;
+            this.index = index;
+            // console.log(index,length);
+          },
+
+          // 更换到下一个商品
+          handleDown() {
+            var index = this.index;
+            var length = +this.goods.length;
+            if (index + 1 == 1) {
+              index = length - 1;
+              this.index = index;
+              return;
+            }
+            index--;
+            this.index = index;
+            // console.log(index,length);
+          },
+
+          // 点击加入购物车按钮，获取数据添加到新数组当中，再执行获取数组中数据循环遍历渲染页面的功能
+          addProduce(){
+            var index = this.index
+            // 获取到当前的数据
+            var obj = {...this.goods[index]}
+            // 将现有的数组重新保存
+            var arr = [...this.arr]
+            this.arr.push(obj)
+            
+
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

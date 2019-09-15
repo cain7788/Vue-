@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <button @click="handleUp">上一个商品</button>
+
+        <button @click="handleDown">下一个商品</button>
+      </div>
+      <p>{{ goods[index].type }}</p>
+      <p>
+        单价 <span>{{ goods[index].price }}</span
+        >元
+      </p>
+      <button @click="handleReduce">-</button>
+      <span v-model="goods[index].count">{{ goods[index].count }}</span>
+      <button @click="handleAdd">+</button>
+      <p>合计：{{ result }}</p>
+    </div>
+
+    <script src="./vue.min.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          // type: "苹果iPhone 11",
+          // price: 5499,
+          // count:1,
+          goods: [
+            { type: "苹果iPhone 11", price: 5499, count: 1 },
+            { type: "华为Mate 20 Pro", price: 3199, count: 2 },
+            { type: "小米9", price: 2549, count: 1 },
+            { type: "Redmi K20", price: 1999, count: 1 }
+          ],
+
+          index: 0
+        },
+
+        computed: {
+          result() {
+            var index = this.index;
+            return +this.goods[index].price * this.goods[index].count;
+          }
+        },
+
+        methods: {
+          handleAdd() {
+            var index = this.index;
+            var countAdd = this.goods[index].count;
+            countAdd++;
+            this.goods[index].count = countAdd
+          },
+
+          handleReduce() {
+            var index = this.index;
+            
+            var countReduce = this.goods[index].count;
+            if (count < 1) {
+              alert("不能再减啦！");
+              return;
+            }
+            countReduce--;
+            this.goods[index].count = countReduce
+          },
+
+          // 更换到上一个商品
+          handleUp() {
+            var index = this.index;
+            var length = +this.goods.length;
+            if ((index + 1) == length) {
+              index = 0;
+              this.index = index
+              return;
+            }
+            index++;
+            this.index = index
+            // console.log(index,length);
+          },
+
+          handleDown() {
+            var index = this.index;
+            var length = +this.goods.length;
+            if ((index + 1) == 1) {
+              index = length - 1;
+              this.index = index
+              return
+            }
+            index--;
+            this.index = index
+            // console.log(index,length);
+            
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+
+        <div>
+            <span>上一个商品</span>
+            
+            <span>上一个商品</span>
+        </div>
+      <p>{{type}}</p>
+      <p>单价 <span ref="nowPrice">{{price}}</span>元</p>
+      <button @click="handleReduce">-</button>
+      <span v-model="count">{{count}}</span>
+      <button @click="handleAdd">+</button>
+      <p>合计：{{result}}</p>
+    </div>
+
+    <script src="./vue.min.js"></script>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+            type: "苹果iPhone 11",
+            price: 5499,
+            count:1,
+        //   goods: [
+        //     { type: "苹果iPhone 11", price: 5499,count:1},
+        //     { type: "华为Mate 20 Pro", price: 3199,count:1},
+        //     { type: "小米9", price: 2549,count:1 },
+        //     { type: "Redmi K20", price: 1999,count:1 }
+        //   ],
+
+            index:0
+        },
+
+        computed:{
+            result(){
+                return (+this.price) * this.count
+            }
+        },
+
+        methods:{
+            handleAdd(){
+                this.count++
+                console.log(this.count);
+                
+
+            },
+
+            handleReduce(){
+                var count = this.count
+                if(count<1){
+                    alert('不能再减啦！')
+                    return 
+                }
+                this.count--
+            }
+
+        }
+      });
+    </script>
+  </body>
+</html>
