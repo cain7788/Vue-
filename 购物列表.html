@@ -112,10 +112,19 @@
             }
 
             // 添加的应该是一个复杂类型的对象，是值传递而不是地址传递，所以要新建一个对象存储
-            this.goods.push({
-              type: this.newsGoods.type,
-              price: this.newsGoods.price
-            });
+            // this.goods.push({
+            //   type: this.newsGoods.type,
+            //   price: this.newsGoods.price
+            // });
+
+            // 获取新添加的一组商品数据
+            var obj = {...this.newsGoods}
+            // 使用展开数组的方法将里面的数据展开成一个新的数据赋值给新的数组arr
+            var arr = [...this.goods]
+            
+            arr.push(obj)
+            // 重新将这个数组覆盖在当前的goods中，更新数据
+            this.goods = arr
 
             this.newsGoods.type = "";
             this.newsGoods.price = "";
@@ -123,7 +132,14 @@
 
         //   添加点击删除商品列表事件,通过index找到对应的商品
           handleDel(index){
-            this.goods.splice(index,1)
+            // this.goods.splice(index,1)
+
+            // 使用展开数组的方法将里面的数据展开成一个新的数据赋值给新的数组arr
+            var arr = [...this.goods]
+            arr.splice(index,1)
+            // 重新将这个数组覆盖在当前的goods中，更新数据
+            this.goods = arr
+
           },
         },
 
@@ -135,6 +151,7 @@
             input.focus()
         },
 
+        // 通过computed监听计算
         computed:{
           result(){
             var price = 0
@@ -145,7 +162,21 @@
           }
         },
 
+        // 使用watch监听goods中的变动状态，以此添加一个增删的日志
+        watch:{
+          // 传入参数newGoods为变更后的新数据，oldGoods为变更前的数据，
+          // 但是需要商品添加和删除时的数据要用赋值的方式才能在这边取到值进行判断
+          goods(newGoods,oldGoods){
+            // 根据前后数据的长度判断数据是否删除或增加
+            if(newGoods.length > oldGoods.length){
+              console.log("添加了商品");
+            }
+            if(newGoods.length < oldGoods.length){
+              console.log("删除了商品");
+            }
 
+          }
+        }
         
       });
     </script>
