@@ -62,7 +62,7 @@
           </tr>
         </tbody>
         <div>
-          计算总价：{{result}}
+          计算总价：{{result | toFixed}}
         </div>
       </table>
     </div>
@@ -121,7 +121,7 @@
             var obj = {...this.newsGoods}
             // 使用展开数组的方法将里面的数据展开成一个新的数据赋值给新的数组arr
             var arr = [...this.goods]
-            
+
             arr.push(obj)
             // 重新将这个数组覆盖在当前的goods中，更新数据
             this.goods = arr
@@ -175,6 +175,12 @@
               console.log("删除了商品");
             }
 
+          }
+        },
+
+        filters:{
+          toFixed(value){
+            return Number(value).toFixed(2)
           }
         }
         
