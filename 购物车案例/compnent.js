@@ -4,7 +4,30 @@
 
 // 这个是商品列表页面的全局组件
 Vue.component("component-a", {
-    template: "<p>这是全局组件</p>"
+    data(){
+        return {
+
+        }
+    },
+    props:["goods"],
+    methods:{
+        handleAddCart(item){   
+            var obj = {...item}
+            this.$emit("sendproduce",obj)
+        }
+    },
+    template: `
+    <div  class="box1">
+        <ul>
+            <li class="lists"  v-for="(item,index) in goods">
+                <p>型号：{{ item.type }}</p>
+                <span style="color: red">￥：{{ item.price }}</span>
+                <span style="margin-left: 100px;">件数：{{ item.count }}</span>
+                <button class="buy" @click="handleAddCart(item)">加购</button>
+            </li>
+        </ul>
+      </div>`,
+
 })
 
 
@@ -12,5 +35,65 @@ Vue.component("component-a", {
 
 // 这个是购物车页面的全局组件
 Vue.component("component-b", {
-    template: "<p>这是全局组件</p>"
+    props:["produce"],
+    data(){
+        return {
+
+        }
+    },
+    methods:{
+        handleDelCart(index){
+            console.log(index);
+            let arr = this.produce
+            this.produce.splice(index,1)
+        },
+        handleAddPro(item){
+            item.count++
+        },
+        handleRedPro(item){
+        if(item.count == 0){
+            return
+        }
+        item.count--
+        },
+
+        
+    },
+    computed:{
+        allPrice(index){
+            // console.log(123);
+            var prices = 0
+            // var prices = this.priceSum
+            this.produce.forEach(item=> {
+              // prices+= +this.arr[index].allPrice
+              prices += +item.price * +item.count
+            });
+            // this.priceSum = prices
+            return prices
+          }
+        },
+    
+    filters:{
+        toFixed(value){
+          return Number(value).toFixed(2)
+        }
+      },
+    template: `
+    <div class="box2">
+        <ul>
+            <li class="lists"  v-for="(item,index) in produce">
+            <p>型号：{{ item.type }}</p>
+            <span style="color: red">￥：{{ item.price }}</span>
+            <span style="margin-left: 60px;">
+                件数：
+                <button @click="handleRedPro(item)" class="btn">-</button>
+                {{ item.count }}
+                <button @click="handleAddPro(item)" class="btn">+</button>
+            </span>
+            <button class="buy" @click="handleDelCart">删除</button>
+            </li>
+        </ul>
+        <div style="text-align: center;margin-top: 10px;">总计：{{ allPrice | toFixed}}</div>
+
+    </div>`,
 })

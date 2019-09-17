@@ -1,28 +1,125 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
-</head>
-<body>
-    <div id="app">
-        <p>{{message}}</p>
-        <!-- 2.在实例模板渲染 -->
-        <component></component>
-    </div>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        li {
+            list-style: none;
+        }
+        .bigBox {
+            margin: 50px auto;
+            width: 840px;
+            background-color: rgb(241, 241, 241);
+            /* display: flex; */
+            overflow: hidden;
+            clear:both;
+
+        }
+        .title {
+            margin: 20px;
+            width: 1;
+            font-size: 28px;
+            font-weight: 600;
+            text-align: center;
+        }
+        .box1 {
+            display: inline-block;
+            border: 1px solid #ddd;
+            width: 400px;
+            margin-right: 30px;
+            padding: 5px 20px;
+        }
+        .box2 {
+
+            display: inline-block;
+            border: 1px solid #ddd;
+            width: 400px;
+            padding: 5px 20px;
+        }
+        .lists {
+            border: 1px solid #ddd;
+            width: 356px;
+            margin-top: 15px;
+            /* text-align: center; */
+            padding-left: 30px;
+            padding-bottom: 4px;
+            position: relative;
+
+        }
+        .buy {
+            position: absolute;
+            width: 50px;
+            height: 30px;
+            right: 10px;
+            top: 6px;
+        }
+        .btn{
+            width: 18px;
+            height: 18px;
+        }
     
-    <script src="../vue.min.js"></script>
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="bigBox">
+        <div class="title">{{ message }}</div>
+        <!-- 2.在实例模板渲染 -->
+        <component-a @sendproduce="getproduces" :goods="goods"></component-a>
+
+        <component-b :produce="produce"></component-b>
+      </div>
+
+      <div style="text-align: center;margin-top: 10px;"></div>
+      
+    <script src="./vue.min.js"></script>
     <script src="./compnent.js"></script>
 
     <script>
-        new Vue({
-            el: "#app",
-            data: {
-                message: "购物车"
-            },
-        })
+      new Vue({
+        el: "#app",
+        data: {
+          message: "购物车案例",
+          goods:[
+            { id:1,type: "苹果iPhone 11", price: 5499, count: 1,allPrice:0 },
+            { id:2,type: "华为Mate 20 Pro", price: 3199, count: 1,allPrice:0 },
+            { id:3,type: "小米9", price: 2549, count: 1,allPrice:0 },
+            { id:4,type: "Redmi K20", price: 1999, count: 1,allPrice:0 }
+          ],
+
+          produce:[]
+
+        },
+        methods:{
+            getproduces(item){
+                console.log(item);
+                var id = item.id
+                var isToggle = true
+                this.produce.forEach(item => {
+                    if(id == item.id){
+                        alert('购物车中已经存在的哦！')
+                        isToggle = false
+                    }
+                });
+
+                if(isToggle == false) return
+                this.produce.push(item)
+                // console.log(this.produce);
+                
+
+                
+            }
+        }
+      });
     </script>
-</body>
+  </body>
 </html>
