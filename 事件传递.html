@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+        
+      <child @click666="handleClick"></child>
+
+    </div>
+
+    <script src="./vue.min.js"></script>
+    <script>
+      Vue.component("child", {
+        // props:["goods"],
+
+        methods:{
+            // 调用父组件中的方法
+            handleClick(){
+                // 使用thid.$emit将父组件中的方法传递过来，$emit中的参数是子组件
+                // 定义的方法名称
+                this.$emit("click666");
+            }
+        },
+        // 在模板字符串中的调用的事件名称就是和平时一样固定事件名，如click等
+        template: `
+        <div>
+            <button @click="handleClick">这个是子组件调用方法的按钮</button>
+        </div>
+        `,
+      });
+
+      new Vue({
+        el: "#app",
+        methods:{
+            handleClick(){
+                // console.log("这是传递给子组件的事件")
+                alert('这是传递给子组件的事件')
+
+            }
+        },
+        // data: {},
+      });
+    </script>
+  </body>
+</html>

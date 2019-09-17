@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+
+    <div id="app">
+
+        <child></child>
+
+    </div>
+
+
+
+    <script src="../vue.min.js"></script>
+    <script>
+        // 注册一个全局组件
+        Vue.component("child",{
+            // mounted(){
+            //     this.$emit("handleclick") //将参数传递会Vue根实例中处理
+            // },
+
+            template:`
+                <div>
+                    <button style="margin: 60px;">这是一个子组件</button>
+                </div>    
+            `,
+
+        })
+
+        
+
+
+
+
+      //创建一个根实例
+      new Vue({
+        el:"#app",
+        methods:{
+            handleclick(){
+                console.log("传递给子组件的事件");
+                
+            }
+        }
+      })
+    </script>
+  </body>
+</html>

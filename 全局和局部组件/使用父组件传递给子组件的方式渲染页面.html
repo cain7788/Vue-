@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- 这个文件中使用到的有：
+      动态传值：将父组件中的数据通过v-bind的方式传递给页面
+      将父组件的数据传到子组件中，用在template模板中渲染页面
+    -->
+
+    <div id="app">
+      <h2>{{ msg }}</h2>
+      <!-- 使用动态取值（v-bind）的方法将父组件中的数据取到打印在页面上 -->
+       <component-a :type="type" :price="price"></component-a>   <!--必须在标签中添加属性以及属性值才能成功渲染 -->
+    </div>
+
+    <script src="../vue.min.js"></script>
+    <script>
+      Vue.component("component-a", {
+        // props声明能够取得从父组件中传过来的值名字是什么
+        props: ["type", "price"],
+        // data() {
+        //   return {
+        //     type: "原装正品 假一赔十 iphone",
+        //     price: 8000
+        //   };
+        // },
+                    // 样式写在模板字符串当中，传值写在页面中的模板标签当中
+        template: `<div style="margin-bottom:20px; border:1px #ddd solid; padding:40px;">
+                        <p>型号：{{ type }} </p>
+                        <p>价格：{{ price }} </p>
+                  </div>`
+      });
+
+      new Vue({
+        el: "#app",
+        data: {
+          msg: "手机列表",
+          type: "原装正品 假一赔十 iphone",
+          price: 8000,
+        }
+      });
+    </script>
+  </body>
+</html>

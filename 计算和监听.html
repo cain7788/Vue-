@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+    <div id="app">
+        <input type="text" v-model="one"> +
+        <input type="text" v-model="two"> =
+        {{result | toFixed }}
+    </div>
+
+    <script src="./vue.min.js"></script>
+    <script>
+        
+
+
+        var app = new Vue({
+            el:"#app",
+            data:{
+                one:1,
+                two:3
+            },
+            computed:{
+                result(){
+                    return +this.one + +this.two
+                }
+            },
+
+            filters:{
+                toFixed(value){
+                    return Number(value).toFixed(2)
+                }
+            }
+        })
+        
+    </script>
+    
+</body>
+</html>

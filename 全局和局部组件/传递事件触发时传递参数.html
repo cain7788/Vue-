@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        在事件传值的基础上添加更多的参数，在子组件的事件方法当中继续传入更多的值，在父组件中相对应的方法中一一对应接收
+        注意： this.$emit("click666")第一个参数是默认的不需要在父组件中接收
+
+    -->
+
+    <div id="app">
+
+        <child @click666="handleClick"></child>   
+    </div>
+    
+    
+    
+
+
+
+    <script src="../vue.min.js"></script>
+
+    <script>
+
+        Vue.component("child",{
+
+            methods:{
+                // 想要实现将子组件的数据传递给父组件的话，要通过事件传递
+                handleClick(event){  // 传入evnet打印当前子组件的所有方法和属性
+                    // 第一个参数是默认的，在父组件当中不用设参数接收
+                    this.$emit("click666","这是子组件传递的参数",{a:1},[1,2],event)
+                }
+            },
+            template:`  
+            <div>
+                <button @click="handleClick">这个是子组件的事件按钮</button>
+            </div>
+            `
+        })
+    
+    
+        new Vue({
+            el:"#app",
+            methods:{
+                // 子组件传递的数据要在这里一一对应接收
+                handleClick(str,obj,arr,event){
+                    console.log(str);
+                    console.log(obj);
+                    console.log(arr);
+                    console.log(event);
+                    
+
+                }
+            }
+
+        })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <component-a></component-a>
+    </div>
+
+    <script src="../vue.min.js"></script>
+    <script>
+      // 创建的这个实例第一个参数是渲染模板，最好是名字一样，不能有大写！！
+      Vue.component("component-a", {
+        // 子组件中的data必须是一个函数，其中数据为对象并且需要使用return返回这个数据
+        data() {
+          return {
+            type: "苹果iPhone 11",
+            price: 5499
+          };
+        },
+        // 当只是调用子组件中的数据渲染的话，在页面上的模板就只需要写模板标签就可以了
+        template: `<div>
+                        <p>型号：{{ type }}  </p>
+                        <p>价格：{{ price }} </p>
+                  </div>`
+      });
+
+      new Vue({
+        el: "#app"
+      });
+    </script>
+  </body>
+</html>

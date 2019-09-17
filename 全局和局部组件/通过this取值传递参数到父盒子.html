@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <!-- click是事件名，该事件可以是任意的字符串， handleClic是传给组件的事件函数 -->
+        <p>{{name}}</p>
+        <child @click123="handleClick"></child>
+    </div>
+    
+    <script src="./vue.min.js"></script>
+    <script>
+
+        // 全局组件
+        Vue.component("child", {
+            data(){
+                return {
+                    name: "子组件的名字"
+                }
+            },
+            methods: {
+                handleClick(){
+                    // 手动调用父组件传递的函数时候，可以通过第二个参数传递参数。
+                    this.$emit("click123", this.name);
+                }
+            },
+
+            template: `
+                <div>
+                    <button @click="handleClick">这是一个子组件</button>
+                </div>
+            `
+        })
+
+        // 根实例
+        new Vue({
+            el: "#app",
+
+            data: {
+                name: ""
+            },
+    
+            methods: {
+                handleClick(name){
+                    this.name = name;
+                }
+            }
+        })
+
+
+
+
+        // function A(obj){}
+
+        // new A({ a: 1, b: 2 })
+
+        // A.component = function(obj){}
+
+        // A.component({c: 3, d: 4})
+
+    </script>
+</body>
+</html>
