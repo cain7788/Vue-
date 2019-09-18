@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            color: rgb(206, 85, 16)
+        }
+      #app {
+        height: 500px;
+        background: #f6f6f6;
+        display: flex;
+      }
+
+      .left {
+        width: 300px;
+        height: 100%;
+        background: #ccc;
+        padding: 50px;
+        box-sizing: border-box;
+      }
+
+      .left p {
+        padding-left: 30px;
+      }
+
+      .right {
+        padding: 50px;
+      }
+      a {
+          text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="left">
+        <router-link to="/list">
+          新潮男装
+          <p><router-link to="/list/clothes">上衣</router-link></p>
+          <p><router-link to="/list/pants">裤子</router-link></p>
+        </router-link>
+      </div>
+      <div class="right">
+          <router-view></router-view>
+      </div>
+    </div>
+
+        <!-- <p>
+            <span>新潮男装</span>
+            <router-link to="item.path" v-for="(item,index) in nav">
+                {{item.meta}} <span v-if="(nav.length-1 == index)"> > </span>
+            </router-link>
+        </p> -->
+    
+    
+    <!-- <div>
+            <p>青年</p>
+            <p>日系复古</p>
+    </div> -->
+
+    <script src="../vue.min.js"></script>
+    <script src="../vue-router.min.js"></script>
+    <script>
+      var List = {
+          data(){
+              return {
+                  nav:[
+
+                  ]
+              }
+          },
+          watch:{
+            //   监听路由的变化
+                $route(){
+                    let arr = this.$route.matched;
+                    let lists = []
+
+                    // 循环获取到meta的信息
+                    arr.forEach((item,index)=>{
+                        lists.push({
+                            path:item.path,
+                            meta:item.meta,
+                        })
+                    })
+
+                    // 最后赋值给nav
+                    this.nav = lists
+                }
+          },
+          mounted(){
+            console.log(this);
+            console.log(this.nav);
+            
+          },
+        template: `
+            <div>
+                <p>
+                    <span>面包屑</span>
+                    <router-link to="item.path" v-for="(item,index) in nav">
+                        {{item.meta}} <span v-if="(nav.length-1 == index)"> > </span>
+                    </router-link>
+                </p>
+                <h3>新潮男装</h3>
+                <div style="padding-left:50px;"> 
+                    <router-view></router-view>
+                </div>
+            </div>
+            `
+      };
+
+      var Clothes = {
+        template: `
+            <div>
+                <p>上衣</p>
+                <img src="./images/clothes.png">
+            </div>
+            `
+      };
+
+      var Pants = {
+        template: `
+            <div>
+                <p>裤子</p>
+                <img src="./images/pants.png" alt="">
+            </div>
+            `
+      };
+
+      var routes = [
+          {path:"/",redirect:"/list"},
+        {
+          path: "/list",
+          component: List,
+          meta:"新潮男装",
+          children: [
+            { path: "clothes", component: Clothes,meta:"上衣" },
+            { path: "pants", component: Pants,meta:"裤子" }
+          ]
+        }
+      ];
+
+      let router = new VueRouter({
+        routes
+      });
+
+      new Vue({
+        el: "#app",
+        router
+      });
+    </script>
+  </body>
+</html>

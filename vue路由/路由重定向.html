@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+    <div id="app">
+        <router-link to="/user">跳转到首页
+            <p>
+                <router-link to="/user/back">返回</router-link>
+            </p>
+        </router-link>
+        
+        <router-view></router-view>
+    </div>
+
+    <script src="../vue.min.js"></script>
+    <script src="../vue-router.min.js"></script>
+    <script>
+
+
+        var User = {
+            template:`
+                <div>
+                    这个是首页页面
+                    <router-view></router-view>
+                </div>
+            `
+        }
+
+        var Back = {
+            template:`
+                <div>
+                    返回首页
+                </div>
+            `
+        }
+
+        var routes = [
+            {path:"/user/back",redirect:"/"},
+            {path:"/user",component:User,children:[
+                {path:"back",component:Back}
+            ]}
+        ]
+
+        let router = new VueRouter({
+            routes
+        })
+    
+    
+        new Vue({
+            el:"#app",
+            router,
+        })
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/user/999">动态获取路由</router-link>
+
+        <router-view></router-view>
+    </div>
+
+    <!-- <div>
+        获取到的动态参数为：
+    </div> -->
+
+    <script src="../vue.min.js"></script>
+    <script src="../vue-router.min.js"></script>
+    <script>
+        
+        // 第一步：创建所需的页面
+        var User = {
+            mounted(){
+                console.log(this.$route);
+            },
+            template:`
+            <div>
+                获取到的动态参数为：{{ $route.params.id }}
+            </div>
+            `
+        }
+
+        // 定义组件，将页面路径和组件关联起来
+        var routes = [
+            {path:"/user/:id",component:User}
+        ]
+
+        // 创建路由实例，这里需要组件的配合
+        const router = new VueRouter({
+            routes
+        })
+    
+    
+        // 挂载到根实例当中
+        new Vue({
+            el:"#app",
+            data:{
+
+            },
+            router,
+        })
+    </script>
+    
+</body>
+</html>

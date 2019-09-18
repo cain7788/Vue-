@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <router-link to="/user">你好，懒懒</router-link>
+
+        <router-view></router-view>
+
+    </div>
+
+    <script src="../vue.min.js"></script>
+    <script src="../vue-router.min.js"></script>
+    <script>
+    // 步骤：
+    // 1.创建所需要的页面组件
+    // 2.定义路由配置，只要把路径和组件关联起来
+    // 3.创建路由实例，需要使用第二步的数组配置
+    // 4.挂载到根实例  
+    
+        
+        // 第一步：创建所需的页面组件
+        var User = {
+            template:`
+            <div>
+                这个是路由创建的页面
+            </div>
+            `
+        }
+
+        // 第二步：定义路由配置，只要把路径和组件关联起来
+        var routes = [
+            {path:"/user",component:User}
+        ]
+
+        // 第三步：创建路由实例，需要使用第二步的数组配置
+        const router = new VueRouter({
+            routes
+        })
+    
+        // 第四步:挂载到根实例 
+        new Vue({
+            el:"#app",
+            data:{
+
+            },
+            router,
+        })
+    </script>
+</body>
+</html>
