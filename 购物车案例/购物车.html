@@ -10,32 +10,31 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            overflow: hidden;
+            /* overflow: hidden; */
         }
         li {
             list-style: none;
         }
         .bigBox {
             margin: 50px auto;
-            width: 840px;
+            width: 850px;
             background-color: rgb(241, 241, 241);
-            /* display: flex; */
-            overflow: hidden;
-            clear:both;
-
-        }
+           padding: 5px;
+          display: flex;
+          flex-wrap: wrap;
+        } 
         .title {
             margin: 20px;
-            width: 1;
             font-size: 28px;
             font-weight: 600;
             text-align: center;
+            width: 850px;
         }
         .box1 {
             display: inline-block;
             border: 1px solid #ddd;
             width: 400px;
-            margin-right: 30px;
+            margin-right: 35px;
             padding: 5px 20px;
         }
         .box2 {
@@ -74,12 +73,12 @@
       <div class="bigBox">
         <div class="title">{{ message }}</div>
         <!-- 2.在实例模板渲染 -->
-        <component-a @sendproduce="getproduces" :goods="goods"></component-a>
+        <component-a @sendproduce="getproduces" :goodsa="goods"></component-a>
 
         <component-b :produce="produce"></component-b>
       </div>
 
-      <div style="text-align: center;margin-top: 10px;"></div>
+      <!-- <div style="text-align: center;margin-top: 10px;"></div> -->
       
     <script src="./vue.min.js"></script>
     <script src="./compnent.js"></script>
@@ -114,8 +113,6 @@
                 if(isToggle == false) return
                 this.produce.push(item)
                 // console.log(this.produce);
-                
-
                 
             }
         }

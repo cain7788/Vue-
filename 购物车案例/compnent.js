@@ -9,23 +9,24 @@ Vue.component("component-a", {
 
         }
     },
-    props:["goods"],
+    props:["goodsa"],
     methods:{
         handleAddCart(item){   
-            var obj = {...item}
-            this.$emit("sendproduce",obj)
+            var list = {...item}
+            this.$emit("sendproduce",list)
         }
     },
     template: `
     <div  class="box1">
         <ul>
-            <li class="lists"  v-for="(item,index) in goods">
+            <li class="lists"  v-for="(item,index) in goodsa">
                 <p>型号：{{ item.type }}</p>
                 <span style="color: red">￥：{{ item.price }}</span>
                 <span style="margin-left: 100px;">件数：{{ item.count }}</span>
                 <button class="buy" @click="handleAddCart(item)">加购</button>
             </li>
         </ul>
+        <div style="text-align: center;margin-top: 10px;">喜欢可以先加入购物车~</div>
       </div>`,
 
 })
